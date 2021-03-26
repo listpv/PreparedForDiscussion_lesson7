@@ -9,7 +9,6 @@ import ru.geekbrains.entities.Student;
 import ru.geekbrains.repo.StudentRepo;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -25,7 +24,7 @@ public class StudentController {
     }
 
     @GetMapping("/edit/{id}")
-    public String changeStudent(
+    public String editStudent(
             @PathVariable("id") Long id,
             Model model){
         model.addAttribute("student", studentRepo.getOne(id));
@@ -33,7 +32,7 @@ public class StudentController {
     }
 
     @PostMapping("/edit")
-    public String changeStudent(@ModelAttribute Student student){
+    public String editStudent(@ModelAttribute Student student){
         System.out.println(student);
         studentRepo.save(student);
 //        studentRepo.update(student.getId(), student.getName(), student.getAge());
@@ -66,6 +65,12 @@ public class StudentController {
             @PathVariable("id") Long id,
             Model model){
         studentRepo.deleteById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteAll")
+    public String deleteAll(){
+        studentRepo.deleteAll();
         return "redirect:/";
     }
 
